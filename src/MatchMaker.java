@@ -22,8 +22,10 @@ public class MatchMaker {
         // : Composing Message
         Integer port = nextPort.incrementAndGet();
         String msg = "ROOM " + port;
-        ServerSocket serverSocket = new ServerSocket()
+        ServerSocket serverSocket = new ServerSocket(port);
 
+        NetworkHelper.write(msg, socket.getOutputStream());
+        MatchHandler matchHandler = new MatchHandler(serverSocket);
 
     }
 
@@ -35,10 +37,12 @@ public class MatchMaker {
             Thread thread = new Thread(()-> {
                 try {
                     String msg = NetworkHelper.msgRead(socket.getInputStream());
-                    String[] args = msg.split(",");
+                    String[] args = msg.split(" ");
                     switch (args[0]) {
                         case "HOST":
                             this.handleHost(socket);
+                        case "CLIENT":
+                            String returnMsg = "Servers"
                     }
                 }
                 catch (IOException ioException){
