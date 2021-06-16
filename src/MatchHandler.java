@@ -1,16 +1,19 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class MatchHandler {
     ServerSocket serverSocket;
     Socket host;
     Socket client;
 
-    public MatchHandler(ServerSocket serverSocket) throws IOException {
+    public MatchHandler(ServerSocket serverSocket, ArrayList<MatchHandler> hosts) throws IOException {
         this.serverSocket = serverSocket;
+        hosts.add(this);
         host = serverSocket.accept();
         client = serverSocket.accept();
+        hosts.remove(this);
         handleSocket();
     }
 
