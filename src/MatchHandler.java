@@ -23,14 +23,14 @@ public class MatchHandler {
         while (!host.isClosed() && !client.isClosed()){
             String hostMove = NetworkHelper.msgRead(host.getInputStream());
             String[] hostArgs = hostMove.split(" ");
-            if (hostArgs[0] == "CLOSE"){
+            if (hostArgs[0].equals("CLOSE")){
                 break;
             }
             NetworkHelper.write(hostMove, client.getOutputStream());
 
             String clientMove = NetworkHelper.msgRead(client.getInputStream());
             String[] clientArgs = clientMove.split(" ");
-            if (clientArgs[0] == "CLOSE"){
+            if (clientArgs[0].equals("CLOSE")){
                 break;
             }
             NetworkHelper.write(clientMove,host.getOutputStream());
